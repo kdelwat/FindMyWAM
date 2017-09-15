@@ -13,10 +13,20 @@ class App extends Component {
     };
 
     this.examMarkChanged = this.examMarkChanged.bind(this);
+    this.examWeightingChanged = this.examWeightingChanged.bind(this);
+    this.examHurdleChanged = this.examHurdleChanged.bind(this);
   }
 
   examMarkChanged(value) {
     this.setState({ examMark: value });
+  }
+
+  examWeightingChanged(value) {
+    this.setState({ examWeighting: value });
+  }
+
+  examHurdleChanged(value) {
+    this.setState({ examHurdle: value });
   }
 
   render() {
@@ -26,8 +36,13 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h2>Welcome to React</h2>
         </div>
-        <p className="App-intro">{this.state.examMark}</p>
+        <p className="App-intro">
+          {this.state.examMark},{this.state.examWeighting},
+          {this.state.examHurdle}
+        </p>
         <PercentageInput handler={this.examMarkChanged} />
+        <PercentageInput handler={this.examWeightingChanged} />
+        <PercentageInput handler={this.examHurdleChanged} />
       </div>
     );
   }
