@@ -62,8 +62,12 @@ class App extends Component {
   };
 
   calculateExamMarkNeeded = target => {
+    let examlessWAM =
+      this.calculateWAM() -
+      this.state.examMark * (this.state.examWeighting / 100);
+
     let mark = Math.ceil(
-      100 * (target - this.calculateWAM()) / this.state.examWeighting
+      100 * (target - examlessWAM) / this.state.examWeighting
     );
 
     if (mark >= 0 && mark <= 100) {
@@ -73,8 +77,8 @@ class App extends Component {
     }
   };
 
-  shouldShowTargets = () => {
-    return this.calculateExamMarkNeeded(55) <= 100;
+  shouldShowTarget = target => {
+    return this.calculateExamMarkNeeded(target) <= 100;
   };
 
   render() {
@@ -85,15 +89,21 @@ class App extends Component {
             <h2 className="wam subtitle has-text-centered">
               {this.calculateWAM()} {this.calculateLetterGrade()}
             </h2>
-            {this.shouldShowTargets() && (
+            {this.shouldShowTarget(55) && (
               <div>
                 <p>On the final exam you'll need...</p>
                 <p>{this.calculateExamMarkNeeded(55)}% to pass</p>
-                <p>{this.calculateExamMarkNeeded(70)}% for a credit</p>
-                <p>{this.calculateExamMarkNeeded(80)}% for a distinction</p>
-                <p>
-                  {this.calculateExamMarkNeeded(90)}% for a high distinction
-                </p>
+                {this.shouldShowTarget(70) && (
+                  <p>{this.calculateExamMarkNeeded(70)}% for a credit</p>
+                )}
+                {this.shouldShowTarget(80) && (
+                  <p>{this.calculateExamMarkNeeded(80)}% for a distinction</p>
+                )}
+                {this.shouldShowTarget(90) && (
+                  <p>
+                    {this.calculateExamMarkNeeded(90)}% for a high distinction
+                  </p>
+                )}
               </div>
             )}
           </div>
