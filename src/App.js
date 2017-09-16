@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import logo from "./logo.svg";
 import "./App.css";
 
 class App extends Component {
@@ -184,7 +183,7 @@ class PercentageInput extends Component {
 
   edited = event => {
     console.log("edited");
-    let value = parseInt(event.target.value);
+    let value = parseInt(event.target.value, 10);
 
     if (isNaN(value) | (value > 100) | (value < 0)) {
       this.setState({ valid: false });
