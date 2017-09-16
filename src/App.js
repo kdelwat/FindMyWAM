@@ -11,23 +11,19 @@ class App extends Component {
       examHurdle: 0,
       assessments: []
     };
-
-    this.examMarkChanged = this.examMarkChanged.bind(this);
-    this.examWeightingChanged = this.examWeightingChanged.bind(this);
-    this.examHurdleChanged = this.examHurdleChanged.bind(this);
   }
 
-  examMarkChanged(value) {
+  examMarkChanged = value => {
     this.setState({ examMark: value });
-  }
+  };
 
-  examWeightingChanged(value) {
+  examWeightingChanged = value => {
     this.setState({ examWeighting: value });
-  }
+  };
 
-  examHurdleChanged(value) {
+  examHurdleChanged = value => {
     this.setState({ examHurdle: value });
-  }
+  };
 
   assessmentsChanged = assessments => {
     this.setState({ assessments: assessments });
@@ -62,8 +58,6 @@ class PercentageInput extends Component {
       value: 0,
       valid: true
     };
-
-    this.edited = this.edited.bind(this);
   }
 
   render() {
@@ -75,7 +69,7 @@ class PercentageInput extends Component {
     );
   }
 
-  edited(event) {
+  edited = event => {
     console.log("edited");
     let value = parseInt(event.target.value);
 
@@ -85,7 +79,7 @@ class PercentageInput extends Component {
       this.setState({ value: value, valid: true });
       this.props.handler(value);
     }
-  }
+  };
 }
 
 class AssessmentEditor extends Component {
@@ -95,29 +89,25 @@ class AssessmentEditor extends Component {
     this.state = {
       assessments: [{ name: "test", mark: 0, weighting: 0 }]
     };
-
-    this.markChanged = this.markChanged.bind(this);
-    this.weightingChanged = this.weightingChanged.bind(this);
-    this.renderAssessment = this.renderAssessment.bind(this);
   }
 
-  markChanged(id, mark) {
+  markChanged = (id, mark) => {
     let assessments = this.state.assessments;
 
     assessments[id].mark = mark;
     this.setState({ assessments: assessments });
 
     this.props.assessmentsChanged(this.state.assessments);
-  }
+  };
 
-  weightingChanged(id, weighting) {
+  weightingChanged = (id, weighting) => {
     let assessments = this.state.assessments;
 
     assessments[id].weighting = weighting;
     this.setState({ assessments: assessments });
 
     this.props.assessmentsChanged(this.state.assessments);
-  }
+  };
 
   nameChanged = (id, event) => {
     let assessments = this.state.assessments;
@@ -157,7 +147,7 @@ class AssessmentEditor extends Component {
     );
   }
 
-  renderAssessment(item, id) {
+  renderAssessment = (item, id) => {
     return (
       <li key={id}>
         <p>
@@ -171,6 +161,6 @@ class AssessmentEditor extends Component {
         <button onClick={() => this.removeAssessment(id)}>Delete</button>
       </li>
     );
-  }
+  };
 }
 export default App;
