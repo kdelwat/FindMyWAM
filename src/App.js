@@ -50,6 +50,8 @@ class App extends Component {
 
     if (wam < 55) {
       return "F";
+    } else if (this.state.examMark < this.state.examHurdle) {
+      return "F (hurdle)";
     } else if (wam >= 55 && wam < 70) {
       return "PS";
     } else if (wam >= 70 && wam < 80) {
@@ -71,7 +73,7 @@ class App extends Component {
     );
 
     if (mark >= 0 && mark <= 100) {
-      return mark;
+      return Math.max(mark, this.state.examHurdle);
     } else {
       return "impossible";
     }
@@ -95,16 +97,25 @@ class App extends Component {
                   <p className="card-header-title">Final exam requirements</p>
                 </div>
                 <div className="card-content">
-                  <p>{this.calculateExamMarkNeeded(55)}% to pass</p>
+                  <p>
+                    <strong>{this.calculateExamMarkNeeded(55)}%</strong> to pass
+                  </p>
                   {this.shouldShowTarget(70) && (
-                    <p>{this.calculateExamMarkNeeded(70)}% for a credit</p>
+                    <p>
+                      <strong>{this.calculateExamMarkNeeded(70)}%</strong> for a
+                      credit
+                    </p>
                   )}
                   {this.shouldShowTarget(80) && (
-                    <p>{this.calculateExamMarkNeeded(80)}% for a distinction</p>
+                    <p>
+                      <strong>{this.calculateExamMarkNeeded(80)}%</strong> for a
+                      distinction
+                    </p>
                   )}
                   {this.shouldShowTarget(90) && (
                     <p>
-                      {this.calculateExamMarkNeeded(90)}% for a high distinction
+                      <strong>{this.calculateExamMarkNeeded(90)}%</strong> for a
+                      high distinction
                     </p>
                   )}
                 </div>
