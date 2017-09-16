@@ -29,6 +29,10 @@ class App extends Component {
     this.setState({ examHurdle: value });
   }
 
+  assessmentsChanged = assessments => {
+    this.setState({ assessments: assessments });
+  };
+
   render() {
     return (
       <div className="App">
@@ -44,7 +48,7 @@ class App extends Component {
         <PercentageInput handler={this.examWeightingChanged} />
         <PercentageInput handler={this.examHurdleChanged} />
 
-        <AssessmentEditor />
+        <AssessmentEditor assessmentsChanged={this.assessmentsChanged} />
       </div>
     );
   }
@@ -102,6 +106,8 @@ class AssessmentEditor extends Component {
 
     assessments[id].mark = mark;
     this.setState({ assessments: assessments });
+
+    this.props.assessmentsChanged(this.state.assessments);
   }
 
   weightingChanged(id, weighting) {
@@ -109,6 +115,8 @@ class AssessmentEditor extends Component {
 
     assessments[id].weighting = weighting;
     this.setState({ assessments: assessments });
+
+    this.props.assessmentsChanged(this.state.assessments);
   }
 
   nameChanged = (id, event) => {
@@ -116,6 +124,8 @@ class AssessmentEditor extends Component {
 
     assessments[id].name = event.target.value;
     this.setState({ assessments: assessments });
+
+    this.props.assessmentsChanged(this.state.assessments);
   };
 
   addAssessment = () => {
@@ -126,12 +136,16 @@ class AssessmentEditor extends Component {
       weighting: 0
     });
     this.setState({ assessments: assessments });
+
+    this.props.assessmentsChanged(this.state.assessments);
   };
 
   removeAssessment = id => {
     let assessments = this.state.assessments;
     assessments.splice(id, 1);
     this.setState({ assessments: assessments });
+
+    this.props.assessmentsChanged(this.state.assessments);
   };
 
   render() {
