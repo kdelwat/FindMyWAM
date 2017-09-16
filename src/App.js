@@ -73,24 +73,58 @@ class App extends Component {
     }
   };
 
+  shouldShowTargets = () => {
+    return this.calculateExamMarkNeeded(55) <= 100;
+  };
+
   render() {
     return (
       <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          {this.state.examMark},{this.state.examWeighting},
-          {this.state.examHurdle}, WAM: {this.calculateWAM()}{" "}
-          {this.calculateLetterGrade()}
-        </p>
-        <p>To get HD: {this.calculateExamMarkNeeded(90)}</p>
-        <PercentageInput handler={this.examMarkChanged} />
-        <PercentageInput handler={this.examWeightingChanged} />
-        <PercentageInput handler={this.examHurdleChanged} />
+        <div className="columns">
+          <div className="column">
+            <h2 className="wam subtitle has-text-centered">
+              {this.calculateWAM()} {this.calculateLetterGrade()}
+            </h2>
+            {this.shouldShowTargets() && (
+              <div>
+                <p>On the final exam you'll need...</p>
+                <p>{this.calculateExamMarkNeeded(55)}% to pass</p>
+                <p>{this.calculateExamMarkNeeded(70)}% for a credit</p>
+                <p>{this.calculateExamMarkNeeded(80)}% for a distinction</p>
+                <p>
+                  {this.calculateExamMarkNeeded(90)}% for a high distinction
+                </p>
+              </div>
+            )}
+          </div>
+          <div className="column">
+            <h2 className="subtitle">Exam</h2>
+            <div className="columns is-mobile">
+              <div className="column">
+                <label className="label">Mark</label>
 
-        <AssessmentEditor assessmentsChanged={this.assessmentsChanged} />
+                <PercentageInput value={0} handler={this.examMarkChanged} />
+              </div>
+              <div className="column">
+                <label className="label">Weighting</label>
+
+                <PercentageInput
+                  value={50}
+                  handler={this.examWeightingChanged}
+                />
+              </div>
+              <div className="column">
+                <label className="label">Hurdle</label>
+
+                <PercentageInput value={60} handler={this.examHurdleChanged} />
+              </div>
+            </div>
+
+            <h2 className="subtitle">Assessments</h2>
+
+            <AssessmentEditor assessmentsChanged={this.assessmentsChanged} />
+          </div>
+        </div>
       </div>
     );
   }
@@ -110,7 +144,9 @@ class PercentageInput extends Component {
     return (
       <input
         onChange={this.edited}
-        className={this.state.valid ? "" : "error"}
+        type="number"
+        placeholder={this.props.value}
+        className={"input " + (this.state.valid ? "" : "is-danger")}
       />
     );
   }
@@ -187,8 +223,27 @@ class AssessmentEditor extends Component {
   render() {
     return (
       <div>
+        <div className="columns is-mobile">
+          <div className="column is-5">
+            <label className="label">Name</label>
+          </div>
+          <div className="column is-3">
+            <label className="label">Mark</label>
+          </div>
+          <div className="column is-3">
+            <label className="label">Weighting</label>
+          </div>
+          <div className="column is-1" />
+        </div>
         <ul>{this.state.assessments.map(this.renderAssessment)}</ul>
-        <button onClick={this.addAssessment}>Add assessment</button>
+        <div className="has-text-centered">
+          <a
+            className="button button-padded is-primary"
+            onClick={this.addAssessment}
+          >
+            Add
+          </a>
+        </div>
       </div>
     );
   }
@@ -196,15 +251,34 @@ class AssessmentEditor extends Component {
   renderAssessment = (item, id) => {
     return (
       <li key={id}>
-        <p>
-          {item.name} {item.mark} {item.weighting}
-        </p>
-        <input onChange={event => this.nameChanged(id, event)} />
-        <PercentageInput handler={mark => this.markChanged(id, mark)} />
-        <PercentageInput
-          handler={weighting => this.weightingChanged(id, weighting)}
-        />
-        <button onClick={() => this.removeAssessment(id)}>Delete</button>
+        <div className="columns is-mobile">
+          <div className="column is-5">
+            <input
+              className="input"
+              placeholder="Midsemester exam"
+              onChange={event => this.nameChanged(id, event)}
+            />
+          </div>
+          <div className="column is-3">
+            <PercentageInput
+              value={25}
+              handler={mark => this.markChanged(id, mark)}
+            />
+          </div>
+          <div className="column is-3">
+            <PercentageInput
+              value={50}
+              handler={weighting => this.weightingChanged(id, weighting)}
+            />
+          </div>
+
+          <div className="column is-1 is-vcentered">
+            <a
+              className="delete vcenter"
+              onClick={() => this.removeAssessment(id)}
+            />
+          </div>
+        </div>
       </li>
     );
   };
