@@ -29,6 +29,38 @@ class App extends Component {
     this.setState({ assessments: assessments });
   };
 
+  calculateWAM = () => {
+    let mark = 0;
+
+    this.state.assessments.map(assessment => {
+      mark += assessment.mark * (assessment.weighting / 100);
+    });
+
+    mark += this.state.examMark * (this.state.examWeighting / 100);
+
+    if (mark > 100) {
+      return 100;
+    } else {
+      return mark;
+    }
+  };
+
+  calculateLetterGrade = () => {
+    let wam = this.calculateWAM();
+
+    if (wam < 55) {
+      return "F";
+    } else if (wam >= 55 && wam < 70) {
+      return "PS";
+    } else if (wam >= 70 && wam < 80) {
+      return "CR";
+    } else if (wam >= 80 && wam < 90) {
+      return "DN";
+    } else {
+      return "HD";
+    }
+  };
+
   render() {
     return (
       <div className="App">
@@ -38,7 +70,8 @@ class App extends Component {
         </div>
         <p className="App-intro">
           {this.state.examMark},{this.state.examWeighting},
-          {this.state.examHurdle}
+          {this.state.examHurdle}, WAM: {this.calculateWAM()}{" "}
+          {this.calculateLetterGrade()}
         </p>
         <PercentageInput handler={this.examMarkChanged} />
         <PercentageInput handler={this.examWeightingChanged} />
