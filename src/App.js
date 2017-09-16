@@ -61,6 +61,18 @@ class App extends Component {
     }
   };
 
+  calculateExamMarkNeeded = target => {
+    let mark = Math.ceil(
+      100 * (target - this.calculateWAM()) / this.state.examWeighting
+    );
+
+    if (mark >= 0 && mark <= 100) {
+      return mark;
+    } else {
+      return "impossible";
+    }
+  };
+
   render() {
     return (
       <div className="App">
@@ -73,6 +85,7 @@ class App extends Component {
           {this.state.examHurdle}, WAM: {this.calculateWAM()}{" "}
           {this.calculateLetterGrade()}
         </p>
+        <p>To get HD: {this.calculateExamMarkNeeded(90)}</p>
         <PercentageInput handler={this.examMarkChanged} />
         <PercentageInput handler={this.examWeightingChanged} />
         <PercentageInput handler={this.examHurdleChanged} />
