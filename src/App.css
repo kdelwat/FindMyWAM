@@ -12,3 +12,7 @@
 .button-padded {
   margin-top: 0.6em;
 }
+
+.info {
+  font-style: italic;
+}

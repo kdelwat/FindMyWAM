@@ -88,6 +88,12 @@ class App extends Component {
       <div className="App">
         <div className="columns">
           <div className="column">
+            <p className="info">
+              Fill in as much information as possible to most accurately
+              estimate your WAM. Entering a weighting for the final exam will
+              give a target score for each academic award.
+            </p>
+
             <h2 className="wam subtitle has-text-centered">
               {this.calculateWAM()} {this.calculateLetterGrade()}
             </h2>
