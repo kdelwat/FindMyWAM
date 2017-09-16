@@ -90,20 +90,24 @@ class App extends Component {
               {this.calculateWAM()} {this.calculateLetterGrade()}
             </h2>
             {this.shouldShowTarget(55) && (
-              <div>
-                <p>On the final exam you'll need...</p>
-                <p>{this.calculateExamMarkNeeded(55)}% to pass</p>
-                {this.shouldShowTarget(70) && (
-                  <p>{this.calculateExamMarkNeeded(70)}% for a credit</p>
-                )}
-                {this.shouldShowTarget(80) && (
-                  <p>{this.calculateExamMarkNeeded(80)}% for a distinction</p>
-                )}
-                {this.shouldShowTarget(90) && (
-                  <p>
-                    {this.calculateExamMarkNeeded(90)}% for a high distinction
-                  </p>
-                )}
+              <div className="card">
+                <div className="card-header">
+                  <p className="card-header-title">Final exam requirements</p>
+                </div>
+                <div className="card-content">
+                  <p>{this.calculateExamMarkNeeded(55)}% to pass</p>
+                  {this.shouldShowTarget(70) && (
+                    <p>{this.calculateExamMarkNeeded(70)}% for a credit</p>
+                  )}
+                  {this.shouldShowTarget(80) && (
+                    <p>{this.calculateExamMarkNeeded(80)}% for a distinction</p>
+                  )}
+                  {this.shouldShowTarget(90) && (
+                    <p>
+                      {this.calculateExamMarkNeeded(90)}% for a high distinction
+                    </p>
+                  )}
+                </div>
               </div>
             )}
           </div>
